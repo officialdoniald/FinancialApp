@@ -1,0 +1,33 @@
+﻿@model FinancialApp.Models.FinancialViewModel
+
+@{
+    ViewBag.Title = "UploadFinancial";
+}
+
+@using (Html.BeginForm("SaveFinancialItem", "Financial", FormMethod.Post, new { @class = "form-signin" }))
+{
+    <h3>Feltöltés:</h3>
+
+    <p>
+        <label>Válasszon egy partnert:</label>
+        @Html.DropDownListFor(m => m.SelectedPartnerID, Model.PartnerList)
+    </p>
+
+    <div class="form-label-group">
+        @Html.TextBoxFor(m => m.Amount, null, new { @id = "inputAmount", @class = "form-control", @placeholder = "Mennyiség" })
+        <label for="inputAmount">Mennyiség</label>
+        @Html.ValidationMessageFor(m => m.Amount, "", new { @class = "text-danger" })
+    </div>
+
+    @Html.TextBoxFor(m => m.Date, new { placeholder = "Dátum" })
+    <script>
+        $('#Date').datepicker({
+            uiLibrary: 'bootstrap4',
+            format: 'yyyy-mm-dd'
+        });
+    </script>
+
+    <br />
+
+    <button class="btn btn-lg btn-primary btn-block" type="submit" id="uploadButton">Feltöltés</button>
+}

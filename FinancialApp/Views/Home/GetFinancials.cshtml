@@ -1,0 +1,47 @@
+﻿@model FinancialApp.Models.HomeViewModel
+
+@{
+    Layout = null;
+}
+
+<h2>Financials:</h2>
+@{
+    if (Model.FinancialItems.Count > 0)
+    {
+        <button class="btn btn-lg btn-danger btn-block" onclick="deleteAllFinincialItem()">Összes törlése</button>
+    }
+}
+
+<br/>
+
+<table class="table table-striped table-hover">
+    <tr>
+        <th>
+            Partner
+        </th>
+        <th>
+            Összeg
+        </th>
+        <th>
+            Dátum
+        </th>
+        <th>
+            Műveletek
+        </th>
+    </tr>
+
+    @{
+        foreach (var item in Model.FinancialItems)
+        {
+            <tr>
+                <td>@item.PARTNER_ID</td>
+                <td>@item.AMOUNT</td>
+                <td>@item.DATE.ToString("yyyy-MM-dd")</td>
+                <td>
+                    @Html.ActionLink("Szerkesztés", "UpdateFinancial", "Financial", new { id = item.ID }, new { @class = "btn btn-lg btn-primary" })
+                    <button class="btn btn-lg btn-danger" onclick="deleteFinincialItem(@item.ID)">Töröl</button>
+                </td>
+            </tr>
+        }
+    }
+</table>

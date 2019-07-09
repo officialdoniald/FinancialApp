@@ -1,0 +1,36 @@
+﻿@model FinancialApp.Models.HomeViewModel
+
+@{
+    Layout = null;
+}
+
+<h2>CalculatedCommission</h2>
+
+<table class="table table-striped table-hover">
+    <tr>
+        <th>
+            Partner
+        </th>
+        <th>
+            Csapat vásárlás
+        </th>
+        <th>
+            Össz. vásárlás
+        </th>
+        <th>
+            Össz. jutalék
+        </th>
+    </tr>
+
+    @{
+        foreach (var item in Model.PartnersCommissions)
+        {
+            <tr>
+                <td>@item.PARTNER_ID</td>
+                <td>@item.TEAM_PURCHASE</td>
+                <td>@item.ALL_PURCHASE</td>
+                <td>@item.COMMISSION</td>
+            </tr>
+        }
+    }
+</table>

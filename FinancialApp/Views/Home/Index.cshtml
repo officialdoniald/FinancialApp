@@ -1,0 +1,80 @@
+﻿@model FinancialApp.Models.HomeViewModel
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+@Html.ActionLink("Financial feltöltés", "UploadFinancial", "Financial", new { }, new { @class = "btn btn-lg btn-primary btn-block" })
+
+<button onclick="calculateCommission()" class="btn btn-lg btn-success btn-block">Jutalék számítás</button>
+
+<div id="alapgrid"></div>
+
+<div id="commissonView"></div>
+
+<script>
+    function initAlapGrid() {
+        $.ajax({
+            url: "@Url.Action("GetFinancials", "Home")",
+            method: "get",
+            data: {},
+            dataType: "html",
+            success:
+                function (view)
+                {
+                    $("#alapgrid").html(view);
+                }
+        })
+    }
+
+    function calculateCommission()
+    {
+        $.ajax({
+            url: "@Url.Action("CalculateCommission", "Home")",
+            method: "get",
+            data: { model: {  @Model  } },
+            dataType: "html",
+            success:
+                function (view)
+                {
+                    $("#commissonView").html(view);
+                }
+        })
+    }
+    
+    function deleteFinincialItem(id) {
+        $.ajax({
+            url: "@Url.Action("DeleteFinancial", "Financial")",
+            method: "POST",
+            data: {id : id},
+            dataType: "JSON",
+            success:
+                function (response)
+                {
+                    if (response.success)
+                        initAlapGrid();
+                    else
+                        alert("Sikertelen törlés");
+                }
+        })
+    }
+    function deleteAllFinincialItem() {
+        $.ajax({
+            url: "@Url.Action("DeleteAllFinancial", "Financial")",
+            method: "POST",
+            data: {},
+            dataType: "JSON",
+            success:
+                function (response)
+                {
+                    if (response.success)
+                        initAlapGrid();
+                    else
+                        alert("Sikertelen törlés");
+                }
+        })
+    }
+    $(document).ready(function () {
+        initAlapGrid();
+    })
+</script>
